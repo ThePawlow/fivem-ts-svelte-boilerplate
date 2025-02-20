@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "module": "es6",
+    "target": "es6",
+    "declaration": true,
+    "types": ["@citizenfx/client", "@citizenfx/server", "@types/node"],
+    "baseUrl": ".",
+    "paths": {
+      "*": ["types/*"]
+    },
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "**/__tests__/*"]
+}
