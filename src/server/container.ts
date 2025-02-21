@@ -1,5 +1,5 @@
 
-import { Container, inject, injectable } from 'inversify';
+import { Container } from 'inversify';
 import { LogService } from "./services/LogService";
 import { TYPES } from "./interfaces";
 import { PlayerController } from "./controllers/PlayerController";
