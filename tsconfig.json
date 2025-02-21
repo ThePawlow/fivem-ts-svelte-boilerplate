@@ -3,12 +3,17 @@
     "noImplicitAny": false,
     "module": "es6",
     "target": "es6",
+    "allowJs": true,
+    "lib": ["es2017"],
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
     "declaration": true,
-    "types": ["@citizenfx/client", "@citizenfx/server", "@types/node"],
+    "types": ["@citizenfx/client", "@citizenfx/server", "@types/node", "inversify"],
     "baseUrl": ".",
     "paths": {
       "*": ["types/*"]
-    },
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "**/__tests__/*"]
