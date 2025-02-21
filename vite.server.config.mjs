@@ -12,10 +12,10 @@ export default defineConfig({
             fileName: () => "main.js",
         },
         rollupOptions: {
-            external: ["@citizenfx/server", "reflect-metadata"]
+            external: ["@citizenfx/server"],
         },
         optimizeDeps: {
-            include: ["reflect-metadata"],
-        }
+            include: ["reflect-metadata"]
+        },
     },
 });

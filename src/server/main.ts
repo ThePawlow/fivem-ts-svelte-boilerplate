@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { container } from "./container";
 import { PlayerController } from "./controllers/PlayerController";
 
-console.log("FiveM TypeScript server is starting...");
+console.log("Server is starting...");
 
 // Retrieve controller from Inversify
 const playerController = container.get<PlayerController>(PlayerController);

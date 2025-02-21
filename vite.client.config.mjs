@@ -3,7 +3,7 @@ import path from "path";
 
 export default defineConfig({
     build: {
-        target: "es2020",
+        target: "node18",
         outDir: "dist/client",
         emptyOutDir: false,
         lib: {
@@ -12,7 +12,10 @@ export default defineConfig({
             fileName: () => "main.js",
         },
         rollupOptions: {
-            external: ["@citizenfx/client"],
+            external: ["@citizenfx/client"]
         },
-    },
+        optimizeDeps: {
+            include: ["reflect-metadata"]
+        }
+    }
 });
