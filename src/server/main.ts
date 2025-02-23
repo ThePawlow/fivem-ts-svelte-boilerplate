@@ -1,23 +1,18 @@
 import 'reflect-metadata';
 import { container } from "./container";
 import { PlayerController } from "./controllers/PlayerController";
+import {LogService} from "../shared/services/LogService";
+import {Events} from "@nativewrappers/server";
 
-console.log("Server is starting...");
-
-// Retrieve controller from Inversify
+const logger = container.get<LogService>(LogService);
 const playerController = container.get<PlayerController>(PlayerController);
 
-// FiveM event handling
-on("playerConnecting", (name: string) => {
-    playerController.onPlayerConnecting(name);
-});
+logger.log("Server is starting...");
 
-on("onResourceStart", (resourceName: string) => {
-    if (GetCurrentResourceName() !== resourceName) return;
-    console.log(`[Server]: Resource ${resourceName} started!`);
-});
+Events.on("playerConnecting", (name: string) => {
+    logger.log(`Player connected with name ${name}`);
+})
 
-on("onResourceStop", (resourceName: string) => {
-    if (GetCurrentResourceName() !== resourceName) return;
-    console.log(`[Server]: Resource ${resourceName} stopped!`);
-});
+Events.on("playerDisconnected", (name: string) => {
+    logger.log(`Player disconnected with name ${name}`);
+})
