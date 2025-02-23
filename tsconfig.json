@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
+    "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "node",
-    "target": "ES6",
-    "allowJs": true,
-    "lib": ["ES2017"],
+    "lib": ["ES2022"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "declaration": true,

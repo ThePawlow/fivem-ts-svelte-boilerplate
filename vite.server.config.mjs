@@ -1,13 +1,13 @@
 import { defineConfig } from "vite";
-import path from "path";
 
 export default defineConfig({
     build: {
-        target: "node18",
+        target: "es2022",
+        composite: true,
         outDir: "dist/server",
-        emptyOutDir: false,
+        emptyOutDir: true,
         lib: {
-            entry: path.resolve(__dirname, "src/server/main.ts"),
+            entry: "src/server/main.ts",
             formats: ["cjs"],
             fileName: () => "main.js",
         },
@@ -17,5 +17,8 @@ export default defineConfig({
         optimizeDeps: {
             include: ["reflect-metadata"]
         },
+        commonjsOptions: {
+            transformMixedEsModules: true,
+        }
     },
 });
