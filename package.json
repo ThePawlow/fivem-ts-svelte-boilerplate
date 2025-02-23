@@ -15,9 +15,12 @@
   "devDependencies": {
     "@citizenfx/client": "^2.0.12933-1",
     "@citizenfx/server": "^2.0.12933-1",
+    "@nativewrappers/fivem": "^0.0.56",
+    "@nativewrappers/server": "^0.0.56",
     "@types/node": "^22.13.4",
     "inversify": "^6.2.2",
     "reflect-metadata": "^0.2.2",
+    "terser": "^5.39.0",
     "ts-node": "^10.9.2"
   }
 }
