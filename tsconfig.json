@@ -1,14 +1,21 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
-    "module": "es6",
-    "target": "es6",
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["ES2022"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "declaration": true,
-    "types": ["@citizenfx/client", "@citizenfx/server", "@types/node"],
+    "types": ["@citizenfx/client", "@citizenfx/server", "@types/node", "inversify"],
     "baseUrl": ".",
     "paths": {
-      "*": ["types/*"]
+      "@shared/*": ["src/shared/*"]
     },
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "**/__tests__/*"]

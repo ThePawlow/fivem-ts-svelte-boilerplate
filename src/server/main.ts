@@ -1,16 +1,23 @@
-import { container } from "../shared/ServiceContainer";
-import { StartupModule } from "./Module.StartUp";
-import { LoggerService } from "./services/LoggerService";
+import 'reflect-metadata';
+import { container } from "./container";
+import { PlayerController } from "./controllers/PlayerController";
 
-// Register Services
-container.register("logger", new LoggerService());
-//container.register("database", new DatabaseService());
+console.log("Server is starting...");
 
-// Initialize Modules
-const startupModule = new StartupModule();
+// Retrieve controller from Inversify
+const playerController = container.get<PlayerController>(PlayerController);
 
-// // FiveM Events Example
-on("playerConnecting", (name: string, setKickReason: (reason: string) => void, deferrals: any) => {
-    const logger = container.resolve<LoggerService>("logger");
-    logger.log(`${name} is connecting...`);
+// FiveM event handling
+on("playerConnecting", (name: string) => {
+    playerController.onPlayerConnecting(name);
+});
+
+on("onResourceStart", (resourceName: string) => {
+    if (GetCurrentResourceName() !== resourceName) return;
+    console.log(`[Server]: Resource ${resourceName} started!`);
+});
+
+on("onResourceStop", (resourceName: string) => {
+    if (GetCurrentResourceName() !== resourceName) return;
+    console.log(`[Server]: Resource ${resourceName} stopped!`);
 });
