@@ -1,18 +1,28 @@
 import { defineConfig } from "vite";
-import path from "path";
 
 export default defineConfig({
     build: {
-        target: "node18",
+        minify: "terser",
+        terserOptions: {
+            mangle: false
+        },
+        target: "es2022",
+        composite: true,
         outDir: "dist/server",
-        emptyOutDir: false,
+        emptyOutDir: true,
         lib: {
-            entry: path.resolve(__dirname, "src/server/main.ts"),
+            entry: "src/server/main.ts",
             formats: ["cjs"],
             fileName: () => "main.js",
         },
         rollupOptions: {
             external: ["@citizenfx/server"],
         },
+        optimizeDeps: {
+            include: ["reflect-metadata", "@nativewrappers/server"]
+        },
+        commonjsOptions: {
+            transformMixedEsModules: true,
+        }
     },
 });

@@ -1,16 +1,18 @@
-import { container } from "../shared/ServiceContainer";
-import { StartupModule } from "./Module.StartUp";
-import { LoggerService } from "./services/LoggerService";
+import 'reflect-metadata';
+import { container } from "./container";
+import { PlayerController } from "./controllers/PlayerController";
+import {LogService} from "../shared/services/LogService";
+import {Events} from "@nativewrappers/server";
 
-// Register Services
-container.register("logger", new LoggerService());
-//container.register("database", new DatabaseService());
+const logger = container.get<LogService>(LogService);
+const playerController = container.get<PlayerController>(PlayerController);
 
-// Initialize Modules
-const startupModule = new StartupModule();
+logger.log("Server is starting...");
 
-// // FiveM Events Example
-on("playerConnecting", (name: string, setKickReason: (reason: string) => void, deferrals: any) => {
-    const logger = container.resolve<LoggerService>("logger");
-    logger.log(`${name} is connecting...`);
-});
+Events.on("playerConnecting", (name: string) => {
+    logger.log(`Player connected with name ${name}`);
+})
+
+Events.on("playerDisconnected", (name: string) => {
+    logger.log(`Player disconnected with name ${name}`);
+})
