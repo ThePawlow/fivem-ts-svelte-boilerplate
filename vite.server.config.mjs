@@ -2,6 +2,10 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
     build: {
+        minify: "terser",
+        terserOptions: {
+            mangle: false
+        },
         target: "es2022",
         composite: true,
         outDir: "dist/server",
@@ -15,7 +19,7 @@ export default defineConfig({
             external: ["@citizenfx/server"],
         },
         optimizeDeps: {
-            include: ["reflect-metadata"]
+            include: ["reflect-metadata", "@nativewrappers/server"]
         },
         commonjsOptions: {
             transformMixedEsModules: true,

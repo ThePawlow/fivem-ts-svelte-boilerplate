@@ -8,7 +8,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "declaration": true,
-    "types": ["@citizenfx/client", "@citizenfx/server", "@types/node", "inversify"],
+    "types": ["@citizenfx/client", "@citizenfx/server", "@types/node", "inversify", "@nativewrappers/client", "@nativewrappers/server"],
     "baseUrl": ".",
     "paths": {
       "@shared/*": ["src/shared/*"]
