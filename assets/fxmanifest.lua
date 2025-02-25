@@ -10,3 +10,10 @@ url 'https://github.com/ThePawlow/fivem-ts-svelte-boilerplate/tree/main'
 
 client_script 'client/main.js'
 server_script 'server/main.js'
+
+ui_page 'nui/index.html'
+files {
+    'nui/index.html',
+    'nui/assets/*.js',
+    'nui/assets/*.css'
+}

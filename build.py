@@ -34,12 +34,16 @@ if len(sys.argv) > 3:
 
 ASSET_FOLDER = f"{ROOT_FOLDER}/assets"
 DEST_FOLDER = f"{ROOT_FOLDER}/dist"
+NUI_FOLDER = f"{ROOT_FOLDER}/src/nui"
 
 # Building Project
 os.makedirs(DEST_FOLDER, exist_ok=True)
 print("🔨 Building {}".format(OUTPUT))
 for config in ["server", "client"]:
     subprocess.run(["sudo", "yarn", "vite", "build", "--config", f"vite.{config}.config.mjs"])
+
+print("🔨 Building NUI from {}".format(NUI_FOLDER))
+subprocess.run(["yarn", "build"], cwd=NUI_FOLDER, check=True)
 print("✅ Done building!")
 
 # Copying assets over
