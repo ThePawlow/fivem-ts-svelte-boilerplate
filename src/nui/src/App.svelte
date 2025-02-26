@@ -1,45 +1,43 @@
-<script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
+<script>
+  import { onMount } from "svelte";
 
+  let isVisible = false;
 
-  import Counter from './lib/Counter.svelte'
+  // Listen for messages from the client
+  onMount(() => {
+    window.addEventListener("message", (event) => {
+      if (event.data.event === "showUI") {
+        isVisible = event.data.show;
+      }
+    });
+  });
+
+  function closeUI() {
+    // Send event back to FiveM client
+    // https://docs.fivem.net/docs/scripting-manual/nui-development/nui-callbacks/
+    fetch(`https://learn/NUIControllerCloseUI`, {
+      method: "POST",
+      body: JSON.stringify({}),
+    });
+  }
 </script>
 
-<main>
-  <div>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+{#if isVisible}
+  <div class="nui-container">
+    <h1>Welcome to the FiveM NUI</h1>
+    <button on:click={closeUI}>Close</button>
   </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
-</main>
+{/if}
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
+  .nui-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
   }
 </style>
