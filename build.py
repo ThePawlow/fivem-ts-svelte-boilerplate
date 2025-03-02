@@ -2,6 +2,14 @@ import shutil
 import os
 import subprocess
 import sys
+import platform
+
+IS_WINDOWS = platform.system() == "Windows"
+if IS_WINDOWS:
+    sudo_prefix = []
+else:
+    sudo_prefix = ["sudo"]
+
 
 def delete_dir_recursive(directory_path):
     print("📁 Deleting files from {}".format(directory_path))
@@ -40,10 +48,10 @@ NUI_FOLDER = f"{ROOT_FOLDER}/src/nui"
 os.makedirs(DEST_FOLDER, exist_ok=True)
 print("🔨 Building {}".format(OUTPUT))
 for config in ["server", "client"]:
-    subprocess.run(["sudo", "yarn", "vite", "build", "--config", f"vite.{config}.config.mjs"])
+    subprocess.run(sudo_prefix + ["yarn", "vite", "build", "--config", f"vite.{config}.config.mjs"], shell=IS_WINDOWS)
 
 print("🔨 Building NUI from {}".format(NUI_FOLDER))
-subprocess.run(["yarn", "build"], cwd=NUI_FOLDER, check=True)
+subprocess.run(["yarn", "build"], cwd=NUI_FOLDER, check=True, shell=IS_WINDOWS)
 print("✅ Done building!")
 
 # Copying assets over
