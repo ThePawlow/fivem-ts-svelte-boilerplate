@@ -15,7 +15,7 @@
     "watch:server": "vite build --watch --config vite.server.config.mjs",
     "watch:client": "vite build --watch --config vite.client.config.mjs",
     "watch:nui": "cd src/nui && yarn build --watch",
-    "watch:assets": "node watch-assets.js",
+    "watch:assets": "node watch-assets.mjs",
     "watch": "yarn dep:install && concurrently \"yarn watch:server\" \"yarn watch:client\" \"yarn watch:nui\" \"yarn watch:assets\""
   },
   "devDependencies": {
