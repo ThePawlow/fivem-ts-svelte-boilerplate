@@ -10,11 +10,14 @@
   },
   "scripts": {
     "dep:install": "yarn install && cd src/nui && yarn install",
-    "build:all": "node build.js",
-    "copy:assets": "node copy-assets.js",
+    "build:server": "vite build --config vite.server.config.mjs",
+    "build:client": "vite build --config vite.client.config.mjs",
+    "build:nui": "cd src/nui && yarn build",
+    "build": "concurrently \"yarn build:server\" \"yarn build:client\" \"yarn build:nui\" \"yarn copy:assets\"",
     "watch:server": "vite build --watch --config vite.server.config.mjs",
     "watch:client": "vite build --watch --config vite.client.config.mjs",
     "watch:nui": "cd src/nui && yarn build --watch",
+    "copy:assets": "node copy-assets.mjs",
     "watch:assets": "node watch-assets.mjs",
     "watch": "yarn dep:install && concurrently \"yarn watch:server\" \"yarn watch:client\" \"yarn watch:nui\" \"yarn watch:assets\""
   },
