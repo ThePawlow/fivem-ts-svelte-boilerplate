@@ -15,6 +15,7 @@ if(process.env.RCON_USE)
         // You must wait until this event is fired before sending any commands,
         // otherwise those commands will fail.
         console.log("Authenticated");
+        conn.send("refresh");
         conn.send("ensure " + process.env.RCON_ENSURE);
     }).on('response', function (str) {
         // remove first 4 characters of the response string
