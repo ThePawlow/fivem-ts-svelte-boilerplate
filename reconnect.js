@@ -20,6 +20,8 @@ if(process.env.RCON_USE)
     }).on('response', function (str) {
         // remove first 4 characters of the response string
         str = str.substring(5);
+        // remove all color codes from the response string (e.g. ^1, ^2, ^3, ^4, ^5, ^6, ^7, ^8, ^9, ^0)	
+        str = str.replace(/\^([0-9]|\:|\;)/g, '');
         console.log(str);
         conn.disconnect();
 
