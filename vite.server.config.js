@@ -1,4 +1,6 @@
 import { defineConfig } from "vite";
+import dotenv from 'dotenv'
+dotenv.config()
 
 export default defineConfig({
     build: {
@@ -14,7 +16,7 @@ export default defineConfig({
         },
         target: "es2022",
         composite: true,
-        outDir: "dist/server",
+        outDir: process.env.OUTPUT_FOLDER + "/server",
         emptyOutDir: true,
         lib: {
             entry: "src/server/main.ts",
