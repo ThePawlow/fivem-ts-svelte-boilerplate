@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { NUIController } from './NUIController';
-  const resourceName = (window as any).GetParentResourceName();
   let isVisible = false;
 
   // Listen for messages from the client
@@ -10,11 +9,15 @@
       NUIController.processEvents(event);
     });
   });
-  NUIController.on<boolean>('showUI', (show) => {
-    isVisible = show;
-  });
+  NUIController.on<boolean>(
+    'showUI',
+    (show) => {
+      isVisible = show;
+    },
+    [{ data: true, delay: 500 }],
+  );
   function closeUI() {
-    NUIController.emit('NUIControllerCloseUI');
+    NUIController.emit('NUIControllerCloseUI', { success: true });
   }
 </script>
 
