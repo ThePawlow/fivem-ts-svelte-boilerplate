@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "concurrently": "^9.1.2",
     "typescript": "^5.7.3",
@@ -10,16 +11,9 @@
   },
   "scripts": {
     "dep:install": "yarn install && cd src/nui && yarn install",
-    "build:server": "vite build --config vite.server.config.mjs",
-    "build:client": "vite build --config vite.client.config.mjs",
-    "build:nui": "cd src/nui && yarn build",
-    "build": "concurrently \"yarn build:server\" \"yarn build:client\" \"yarn build:nui\" \"yarn copy:assets\"",
-    "watch:server": "vite build --watch --config vite.server.config.mjs",
-    "watch:client": "vite build --watch --config vite.client.config.mjs",
-    "watch:nui": "cd src/nui && yarn build --watch",
-    "copy:assets": "node copy-assets.mjs",
-    "watch:assets": "node watch-assets.mjs",
-    "watch": "yarn dep:install && concurrently \"yarn watch:server\" \"yarn watch:client\" \"yarn watch:nui\" \"yarn watch:assets\""
+    "copy:assets": "node copy-assets.js",
+    "watch:all": "node watch.js",
+    "watch": "yarn dep:install && yarn watch:all"
   },
   "devDependencies": {
     "@citizenfx/client": "^2.0.12933-1",
@@ -28,7 +22,10 @@
     "@nativewrappers/server": "^0.0.56",
     "@types/node": "^22.13.4",
     "chokidar": "^4.0.3",
+    "dotenv": "^16.4.7",
     "inversify": "^6.2.2",
+    "process": "^0.11.10",
+    "rcon": "^1.1.0",
     "reflect-metadata": "^0.2.2",
     "terser": "^5.39.0",
     "ts-node": "^10.9.2"

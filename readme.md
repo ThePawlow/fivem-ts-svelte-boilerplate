@@ -4,24 +4,9 @@
 - Dependency Injection with Inversify
 - Making use of nativewrappers https://github.com/nativewrappers/nativewrappers for a consistent object oriented approach.
 ## 🎯 Getting Started
-### Installing Dependencies
 Linux might require sudo access
 ```
-yarn run dep:install
-```
-### Building
-```
-yarn run build
-yarn run build:server
-yarn run build:client
-yarn run build:nui
-```
-### Watching
-```
 yarn run watch
-yarn run watch:server
-yarn run watch:client
-yarn run watch:nui
 ```
 ## 💡 Understanding
 ### Structure

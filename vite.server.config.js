@@ -2,6 +2,12 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
     build: {
+        resolve: {
+            alias: {
+                "@": "/src/server/**/*",
+                "@shared": "/src/shared/**/*"
+            }
+        },
         minify: "terser",
         terserOptions: {
             mangle: false

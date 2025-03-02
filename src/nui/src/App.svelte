@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
-
+  const resourceName = (window as any).GetParentResourceName();
   let isVisible = false;
 
   // Listen for messages from the client
@@ -15,7 +15,7 @@
   function closeUI() {
     // Send event back to FiveM client
     // https://docs.fivem.net/docs/scripting-manual/nui-development/nui-callbacks/
-    fetch(`https://learn/NUIControllerCloseUI`, {
+    fetch(`https://${resourceName}/NUIControllerCloseUI`, {
       method: "POST",
       body: JSON.stringify({}),
     });
