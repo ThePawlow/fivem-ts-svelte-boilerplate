@@ -1,24 +1,20 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount } from 'svelte';
+  import { NUIController } from './NUIController';
   const resourceName = (window as any).GetParentResourceName();
   let isVisible = false;
 
   // Listen for messages from the client
   onMount(() => {
-    window.addEventListener("message", (event) => {
-      if (event.data.event === "showUI") {
-        isVisible = event.data.show;
-      }
+    window.addEventListener('message', (event) => {
+      NUIController.processEvents(event);
     });
   });
-
+  NUIController.on<boolean>('showUI', (show) => {
+    isVisible = show;
+  });
   function closeUI() {
-    // Send event back to FiveM client
-    // https://docs.fivem.net/docs/scripting-manual/nui-development/nui-callbacks/
-    fetch(`https://${resourceName}/NUIControllerCloseUI`, {
-      method: "POST",
-      body: JSON.stringify({}),
-    });
+    NUIController.emit('NUIControllerCloseUI');
   }
 </script>
 
