@@ -3,13 +3,13 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export default defineConfig({
+    resolve: {
+        alias: {
+            "@client": "/src/client",
+            "@shared": "/src/shared"
+        }
+    },
     build: {
-        resolve: {
-            alias: {
-                "@": "/src/client/**/*",
-                "@shared": "/src/shared/**/*"
-            }
-        },
         minify: "terser",
         terserOptions: {
             mangle: false

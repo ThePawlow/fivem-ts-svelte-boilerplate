@@ -11,7 +11,9 @@
     "types": ["@citizenfx/client", "@citizenfx/server", "@types/node", "inversify", "@nativewrappers/client", "@nativewrappers/server"],
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["src/shared/*"]
+      "@shared/*": ["src/shared/*"],
+      "@server/*": ["src/server/*"],
+      "@client/*": ["src/client/*"]
     },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
