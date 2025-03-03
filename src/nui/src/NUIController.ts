@@ -5,7 +5,7 @@ type DebugEvent<T = unknown> = {
 }
 type DebugEventArg<T = unknown> = Omit<DebugEvent<T>, 'action'>;
 type NUIListener<T = unknown> = (data: T) => void;
-const resourceName = (window as any).GetParentResourceName();
+const resourceName = (window as any).GetParentResourceName?.() ?? "nui";
 
 export class NUIController {
     private static listeners = new Map<string, NUIListener<any>[]>();
@@ -22,12 +22,13 @@ export class NUIController {
             }
             for (const debugEvent of (debugEvents as DebugEvent<T>[])) {
                 debugEvent.action = action;
+                const msg = new MessageEvent('message', { data: debugEvent });
                 if (debugEvent.delay) {
                     setTimeout(() => {
-                        this.processEvents(debugEvent);
+                        this.processEvents(msg);
                     }, debugEvent.delay);
                 } else {
-                    this.processEvents(debugEvent);
+                    this.processEvents(msg);
                 }
             }
         }
