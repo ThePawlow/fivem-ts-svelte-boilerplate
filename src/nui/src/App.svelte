@@ -4,13 +4,6 @@
   let isVisible = $state(false);
 
   // Listen for messages from the client
-  onMount(() => {
-    const controller = new AbortController();
-    window.addEventListener('message', NUIController.processEvents, controller);
-    return () => {
-      controller.abort();
-    };
-  });
   NUIController.on<boolean>(
     'showUI',
     (show) => {

@@ -1,3 +1,5 @@
+import { onMount } from "svelte";
+
 type DebugEvent<T = unknown> = {
     action: string;
     data: T;
@@ -8,11 +10,15 @@ type NUIListener<T = unknown> = (data: T) => void;
 const resourceName = (window as any).GetParentResourceName?.() ?? "nui";
 
 export class NUIController {
+    private static initialized = false;
     private static listeners = new Map<string, NUIListener<any>[]>();
     public static get isEnvBrowser() {
         return !(window as any).invokeNative;
     }
     static on<T = unknown>(action: string, listener: NUIListener<T>, debugEvents?: DebugEventArg<T>[] | DebugEventArg<T>) {
+        if (!this.initialized) {
+            this.init();
+        }
         const listeners = this.listeners.get(action) || [];
         listeners.push(listener);
         this.listeners.set(action, listeners);
@@ -53,10 +59,10 @@ export class NUIController {
     static emit<T = unknown>(action: string, data?: T, debugEmit?: any) {
         console.log(`Emitting event: ${action} with data: ${JSON.stringify(data, null, 2)}`);
         if (this.isEnvBrowser) {
-           if (debugEmit) {
-               return new Response(debugEmit);
-           } 
-           return;
+            if (debugEmit) {
+                return new Response(debugEmit);
+            }
+            return;
         }
         return fetch(`https://${resourceName}/${action}`, {
             method: 'POST',
@@ -67,7 +73,7 @@ export class NUIController {
         });
     }
 
-    static processEvents(event: MessageEvent | DebugEvent) {
+    private static processEvents(event: MessageEvent | DebugEvent) {
         const { action, data } = event.data;
         const listener = this.listeners.get(action);
         if (listener) {
@@ -76,5 +82,18 @@ export class NUIController {
         } else {
             console.warn(`No listener for action: ${action}`);
         }
+    }
+
+    private static init() {
+        if (this.initialized) return;
+        this.initialized = true;
+        onMount(() => {
+            const controller = new AbortController();
+            window.addEventListener('message', this.processEvents, controller);
+            console.log('NUIController initialized');
+            return () => {
+                controller.abort();
+            };
+        });
     }
 }
