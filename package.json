@@ -13,7 +13,8 @@
     "dep:install": "yarn install && cd src/nui && yarn install",
     "copy:assets": "node copy-assets.js",
     "watch:all": "node watch.js",
-    "watch": "yarn dep:install && yarn watch:all"
+    "watch": "yarn dep:install && yarn watch:all",
+    "dev:browser": "cd src/nui && yarn dev"
   },
   "devDependencies": {
     "@citizenfx/client": "^2.0.12933-1",
