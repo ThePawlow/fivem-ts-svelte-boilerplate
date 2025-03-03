@@ -1,13 +1,15 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { NUIController } from './NUIController';
-  let isVisible = false;
+  let isVisible = $state(false);
 
   // Listen for messages from the client
   onMount(() => {
-    window.addEventListener('message', (event) => {
-      NUIController.processEvents(event);
-    });
+    const controller = new AbortController();
+    window.addEventListener('message', NUIController.processEvents, controller);
+    return () => {
+      controller.abort();
+    };
   });
   NUIController.on<boolean>(
     'showUI',
@@ -24,7 +26,7 @@
 {#if isVisible}
   <div class="nui-container">
     <h1>Welcome to the FiveM NUI</h1>
-    <button on:click={closeUI}>Close</button>
+    <button onclick={closeUI}>Close</button>
   </div>
 {/if}
 
