@@ -1,0 +1,29 @@
+services:
+  server:
+    depends_on:
+      - db
+    image: spritsail/fivem
+    container_name: fivem
+    restart: always
+    stdin_open: true
+    tty: true
+    volumes:
+      - "<server_data>:/config"
+      # Enable a volume mount for txAdmin's data files
+      # - "/path/to/txData/folder:/txData"
+    ports:
+      - "30120:30120"
+      - "30120:30120/udp"
+      # Allow txAdmin's webserver port to be accessible
+      # - "40120:40120"
+    environment:
+      LICENSE_KEY: "<LICENSE>"
+  db:
+    image: postgres:16.8-alpine3.20
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: fivem
+      POSTGRES_USER: access_user
+      POSTGRES_PASSWORD: example
