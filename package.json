@@ -22,17 +22,20 @@
     "build:nui": "npx vite build ./src-webviews",
     "build:prisma": "npx prisma generate",
     "[-] Utility": "",
-    "dev:nui": "npx vite ./src-webviews --clearScreen=false --host=localhost --port=3000"
+    "dev:nui": "npx vite ./src-nui"
   },
   "devDependencies": {
     "@citizenfx/client": "^2.0.12933-1",
     "@citizenfx/server": "^2.0.12933-1",
     "@nativewrappers/fivem": "^0.0.56",
     "@nativewrappers/server": "^0.0.56",
-    "@types/node": "^22.13.4",
     "dotenv": "^16.4.7",
     "inversify": "^6.2.2",
     "process": "^0.11.10",
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tsconfig/svelte": "^5.0.4",
+    "svelte": "^5.20.2",
+    "svelte-check": "^4.1.4",
     "rcon": "^1.1.0",
     "reflect-metadata": "^0.2.2",
     "@rollup/plugin-commonjs": "^28.0.2",
