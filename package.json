@@ -5,16 +5,24 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "concurrently": "^9.1.2",
     "typescript": "^5.7.3",
-    "vite": "^6.1.0"
+    "rollup": "^4.34.8",
+    "vite": "^6.1.0",
+    "@prisma/client": "6.4.1",
+    "@rollup/plugin-dynamic-import-vars": "^2.1.5",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "esbuild-plugin-fileloc": "^0.0.6",
+    "prisma-json-types-generator": "^3.2.2",
+    "uuid": "^11.1.0"
   },
   "scripts": {
-    "dep:install": "yarn install && cd src/nui && yarn install",
-    "copy:assets": "node copy-assets.js",
-    "watch:all": "node watch.js",
-    "watch": "yarn dep:install && yarn watch:all",
-    "dev:browser": "cd src/nui && yarn dev"
+    "[-] Server Deployment Commands": "",
+    "build": "npm run build:core && npm run build:webviews",
+    "build:core": "rollup -c",
+    "build:nui": "npx vite build ./src-webviews",
+    "build:prisma": "npx prisma generate",
+    "[-] Utility": "",
+    "dev:nui": "npx vite ./src-webviews --clearScreen=false --host=localhost --port=3000"
   },
   "devDependencies": {
     "@citizenfx/client": "^2.0.12933-1",
@@ -22,13 +30,24 @@
     "@nativewrappers/fivem": "^0.0.56",
     "@nativewrappers/server": "^0.0.56",
     "@types/node": "^22.13.4",
-    "chokidar": "^4.0.3",
     "dotenv": "^16.4.7",
     "inversify": "^6.2.2",
     "process": "^0.11.10",
     "rcon": "^1.1.0",
     "reflect-metadata": "^0.2.2",
-    "terser": "^5.39.0",
-    "ts-node": "^10.9.2"
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@swc/cli": "^0.6.0",
+    "@swc/core": "^1.11.4",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.13.5",
+    "@types/uuid": "^10.0.0",
+    "esbuild": "^0.25.0",
+    "fs-extra": "^11.3.0",
+    "glob": "^11.0.1",
+    "prisma": "6.4.1",
+    "rollup": "^4.34.8"
   }
 }
