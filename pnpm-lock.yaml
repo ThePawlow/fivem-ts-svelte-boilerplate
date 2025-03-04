@@ -23,6 +23,9 @@ importers:
       esbuild-plugin-fileloc:
         specifier: ^0.0.6
         version: 0.0.6
+      prisma:
+        specifier: 6.4.1
+        version: 6.4.1(typescript@5.8.2)
       prisma-json-types-generator:
         specifier: ^3.2.2
         version: 3.2.2(prisma@6.4.1(typescript@5.8.2))(typescript@5.8.2)
@@ -102,9 +105,6 @@ importers:
       inversify:
         specifier: ^6.2.2
         version: 6.2.2(reflect-metadata@0.2.2)
-      prisma:
-        specifier: 6.4.1
-        version: 6.4.1(typescript@5.8.2)
       process:
         specifier: ^0.11.10
         version: 0.11.10
