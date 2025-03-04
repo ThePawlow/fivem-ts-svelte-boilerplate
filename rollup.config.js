@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const minifyFlag = false;
 
-const corePath = "resources/[local]/core";
+const outputPath = "./dist";
 const excludedPaths = [];
 const filesToRandomize = [];
 
@@ -23,7 +23,7 @@ function deleteFilesRecursively(dirPath) {
 
         if (fileStat.isDirectory()) {
             const excludedPathsContains = excludedPaths.some((excludedPath) => {
-                if (filePath === path.join(corePath, excludedPath)) {
+                if (filePath === path.join(outputPath, excludedPath)) {
                     return true;
                 }
             });
@@ -35,7 +35,6 @@ function deleteFilesRecursively(dirPath) {
                 deleteFolder = false;
             }
         } else {
-            // Überspringe `.lua`-Dateien
             if (file.endsWith(".lua")) {
                 console.log(`Skipping deletion for .lua file: ${filePath}`);
                 deleteFolder = false;
@@ -78,8 +77,8 @@ function randomizeSharedContent(randomzieFilePath) {
     );
 }
 
-if (fs.existsSync(corePath)) {
-    deleteFilesRecursively(corePath);
+if (fs.existsSync(outputPath)) {
+    deleteFilesRecursively(outputPath);
 }
 
 filesToRandomize.forEach((fPath) => {
@@ -97,9 +96,9 @@ const banner = `
 `;
 export default [
     {
-        input: "./src/core/client/startup.ts",
+        input: "./src/client/startup.ts",
         output: {
-            file: "./resources/[local]/core/client.js",
+            file: "./dist/client.js",
             format: "esm",
             sourcemap: true,
             banner,
@@ -112,16 +111,16 @@ export default [
                 preventAssignment: true,
                 values: {
                     __dirname: JSON.stringify(path.resolve(".")),
-                    __filename: JSON.stringify(path.resolve("./src/core/client/startup.ts")),
+                    __filename: JSON.stringify(path.resolve("./src/client/startup.ts")),
                 },
             }),
             minifyFlag && terser(),
         ],
     },
     {
-        input: "./src/core/server/startup.ts",
+        input: "./src/server/startup.ts",
         output: {
-            file: "./resources/[local]/core/server.js",
+            file: "./dist/server.js",
             format: "cjs",
             sourcemap: true,
         },
@@ -143,7 +142,7 @@ export default [
                 preventAssignment: true,
                 values: {
                     __dirname: JSON.stringify(path.resolve(".")),
-                    __filename: JSON.stringify(path.resolve("./src/core/server/startup.ts")),
+                    __filename: JSON.stringify(path.resolve("./src/server/startup.ts")),
                 },
             }),
             dynamicImportVariables(),

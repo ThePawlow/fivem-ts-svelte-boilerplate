@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@nativewrappers/common':
+        specifier: ^0.0.76
+        version: 0.0.76
       '@prisma/client':
         specifier: 6.4.1
         version: 6.4.1(prisma@6.4.1(typescript@5.8.2))(typescript@5.8.2)
@@ -26,6 +29,9 @@ importers:
       rollup:
         specifier: ^4.34.8
         version: 4.34.9
+      tslib:
+        specifier: ^2.8.1
+        version: 2.8.1
       typescript:
         specifier: ^5.7.3
         version: 5.8.2
@@ -415,6 +421,9 @@ packages:
 
   '@nativewrappers/common@0.0.56':
     resolution: {integrity: sha512-z4/h3CM2JWuAj2GTgaKA1zl1PRg1/4414Gm/jw1QKQVv47ad2nV1vevdpVDAgRsxVI2YnYzGaGZ1see0JBdtyg==}
+
+  '@nativewrappers/common@0.0.76':
+    resolution: {integrity: sha512-E9lXRJ9KAUSbhF4QkzwAlQnZnx2rlBmvZZlvcKsHG5FrOcmXJjLbljp0CSqzHjNZPUEdprmYmmjeUZbXtF8jsQ==}
 
   '@nativewrappers/fivem@0.0.56':
     resolution: {integrity: sha512-0LWQos/Z6SlGNfSORRnaBEIBj4w67fp145fp57z/t5Qgvi5N7JyCZhePHB2DA5vPuz4iM2p/MksPAJM+9jGXKg==}
@@ -1806,6 +1815,8 @@ snapshots:
     optional: true
 
   '@nativewrappers/common@0.0.56': {}
+
+  '@nativewrappers/common@0.0.76': {}
 
   '@nativewrappers/fivem@0.0.56':
     dependencies:
