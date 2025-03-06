@@ -8,7 +8,7 @@ export default defineConfig({
                 client: './src/core/client/startup.ts',
             },
             output: {
-                dir: './resources/[local]/core',
+                dir: './dist',
                 entryFileNames: '[name].js',
                 format: 'cjs',
             },
