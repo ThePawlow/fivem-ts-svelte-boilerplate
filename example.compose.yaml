@@ -9,7 +9,7 @@ services:
     tty: true
     volumes:
       - "./server.cfg:/config/server.cfg"
-      - "./dist:/config/resources/yourresource"
+      - "./dist:/config/resources/fivem-ts"
       # Enable a volume mount for txAdmin's data files
       # - "/path/to/txData/folder:/txData"
     ports:
