@@ -8,7 +8,8 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - "<server_data>:/config"
+      - "./server.cfg:/config/server.cfg"
+      - "./dist:/config/resources/yourresource"
       # Enable a volume mount for txAdmin's data files
       # - "/path/to/txData/folder:/txData"
     ports:

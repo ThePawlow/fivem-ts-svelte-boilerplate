@@ -7,83 +7,10 @@ import dynamicImportVariables from "@rollup/plugin-dynamic-import-vars";
 import fs from "fs-extra";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
+import copy from "rollup-plugin-copy";
 
 const minifyFlag = false;
-
 const outputPath = "./dist";
-const excludedPaths = [];
-const filesToRandomize = [];
-
-function deleteFilesRecursively(dirPath) {
-    let deleteFolder = true;
-    const files = fs.readdirSync(dirPath);
-    for (const file of files) {
-        const filePath = path.join(dirPath, file);
-        const fileStat = fs.lstatSync(filePath);
-
-        if (fileStat.isDirectory()) {
-            const excludedPathsContains = excludedPaths.some((excludedPath) => {
-                if (filePath === path.join(outputPath, excludedPath)) {
-                    return true;
-                }
-            });
-            if (!excludedPathsContains) {
-                const res = deleteFilesRecursively(filePath);
-                deleteFolder = deleteFolder && res;
-            } else {
-                console.log(`Skipping deletion for Folder: ${filePath}`);
-                deleteFolder = false;
-            }
-        } else {
-            if (file.endsWith(".lua")) {
-                console.log(`Skipping deletion for .lua file: ${filePath}`);
-                deleteFolder = false;
-            } else {
-                fs.rmSync(filePath);
-            }
-        }
-    }
-    if (deleteFolder) {
-        fs.rmdirSync(dirPath);
-    }
-    return deleteFolder;
-}
-
-function randomizeSharedContent(randomzieFilePath) {
-    const content = fs.readFileSync(randomzieFilePath, "utf8");
-    const regex = /'([^']*)'/g;
-    let match;
-    const values = [];
-
-    while ((match = regex.exec(content))) {
-        if (!minifyFlag || match[0].length < 10) {
-            values.push(match[0]);
-        }
-    }
-
-    let newContent = content;
-    values.forEach((value) => {
-        newContent = newContent.replace(value, `'${uuidv4()}'`);
-    });
-
-    if (values.length > 0) {
-        fs.writeFileSync(randomzieFilePath, newContent, "utf8");
-    }
-
-    console.log(
-        `Randomized values in ${
-            new RegExp(/\/([^/]+)$/).exec(randomzieFilePath)[0]
-        }: ${values.length}`
-    );
-}
-
-if (fs.existsSync(outputPath)) {
-    deleteFilesRecursively(outputPath);
-}
-
-filesToRandomize.forEach((fPath) => {
-    randomizeSharedContent(fPath);
-});
 
 const banner = `
   const { resolve, join } = require("path");
@@ -94,59 +21,75 @@ const banner = `
 
   process.env["PRISMA_QUERY_ENGINE_BINARY"] = join(cwd(), "resources", "lib", "prisma-orm", "prisma", "generated", "query-engine-windows.exe");
 `;
-export default [
-    {
-        input: "./src/client/startup.ts",
-        output: {
-            file: "./dist/client.js",
-            format: "esm",
-            sourcemap: true,
-            banner,
-        },
-        plugins: [
-            resolve(),
-            commonjs(),
-            typescript(),
-            replace({
-                preventAssignment: true,
-                values: {
-                    __dirname: JSON.stringify(path.resolve(".")),
-                    __filename: JSON.stringify(path.resolve("./src/client/startup.ts")),
-                },
-            }),
-            minifyFlag && terser(),
-        ],
+
+// ✅ Separate Copy Step (Independent Build)
+const copyStep = {
+    input: "noop.js", // Fake input (Rollup requires one)
+    plugins: [
+        copy({
+            targets: [
+                { src: "assets/**/*", dest: "dist" } // ✅ Copy assets separately
+            ],
+            verbose: true,
+            hook: "buildStart", // ✅ Copy before building client/server
+        }),
+    ],
+};
+
+const clientBuild = {
+    input: "./src/client/startup.ts",
+    output: {
+        file: "./dist/client.js",
+        format: "esm",
+        sourcemap: true,
+        banner,
     },
-    {
-        input: "./src/server/startup.ts",
-        output: {
-            file: "./dist/server.js",
-            format: "cjs",
-            sourcemap: true,
-        },
-        target: "node22",
-        makeAbsoluteExternalsRelative: true,
-        external: [
-            "@prisma/client",
-            "buffer",
-            "fs",
-            "napi"
-        ],
-        plugins: [
-            resolve({
-                preferBuiltins: true,
-            }),
-            commonjs(),
-            typescript(),
-            replace({
-                preventAssignment: true,
-                values: {
-                    __dirname: JSON.stringify(path.resolve(".")),
-                    __filename: JSON.stringify(path.resolve("./src/server/startup.ts")),
-                },
-            }),
-            dynamicImportVariables(),
-            minifyFlag && terser(),
-        ],
+    plugins: [
+        resolve(),
+        commonjs(),
+        typescript(),
+        replace({
+            preventAssignment: true,
+            values: {
+                __dirname: JSON.stringify(path.resolve(".")),
+                __filename: JSON.stringify(path.resolve("./src/client/startup.ts")),
+            },
+        }),
+        minifyFlag && terser(),
+    ],
+};
+
+const serverBuild = {
+    input: "./src/server/startup.ts",
+    output: {
+        file: "./dist/server.js",
+        format: "cjs",
+        sourcemap: true,
     },
-];
+    target: "node22",
+    makeAbsoluteExternalsRelative: true,
+    external: [
+        "@prisma/client",
+        "buffer",
+        "fs",
+        "napi",
+    ],
+    plugins: [
+        resolve({
+            preferBuiltins: true,
+        }),
+        commonjs(),
+        typescript(),
+        replace({
+            preventAssignment: true,
+            values: {
+                __dirname: JSON.stringify(path.resolve(".")),
+                __filename: JSON.stringify(path.resolve("./src/server/startup.ts")),
+            },
+        }),
+        dynamicImportVariables(),
+        minifyFlag && terser(),
+    ],
+};
+
+export default [clientBuild, serverBuild, copyStep];
