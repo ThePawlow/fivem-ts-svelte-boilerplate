@@ -4,8 +4,8 @@ export default defineConfig({
     build: {
         rollupOptions: {
             input: {
-                server: './src/core/server/startup.ts',
-                client: './src/core/client/startup.ts',
+                server: './src/server/startup.ts',
+                client: './src/client/startup.ts',
             },
             output: {
                 dir: './dist',
