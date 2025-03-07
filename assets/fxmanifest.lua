@@ -4,9 +4,9 @@ game 'gta5'
 node_version '22'
 
 name 'fivem-ts-svelte-boilerplate'
-description 'A boilerplate for using Typescript in FiveM'
+description 'A FiveM Boilerplate using TypeScript Client- / Serverside and Svelte for UI '
 author 'ThePawlow'
-url 'https://github.com/ThePawlow/fivem-ts-svelte-boilerplate/tree/main'
+url 'https://github.com/ThePawlow/fivem-ts-svelte-boilerplate'
 
 client_script 'client/main.js'
 server_script 'server/main.js'

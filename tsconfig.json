@@ -1,21 +1,30 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "lib": ["ES2022"],
-    "experimentalDecorators": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/@citizenfx"],
+    "removeComments": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
-    "declaration": true,
-    "types": ["@citizenfx/client", "@citizenfx/server", "@types/node", "inversify", "@nativewrappers/client", "@nativewrappers/server"],
-    "baseUrl": ".",
-    "paths": {
-      "@shared/*": ["src/shared/*"]
-    },
-    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "composite": false,
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": false,
+    "module": "ESNext",
+    "target": "ES2022",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "emitDeclarationOnly": true,
+    "baseUrl": "src",
+    "paths": {
+      "@shared/*": ["src/shared/*"],
+      "@server/*": ["src/server/*"],
+      "@client/*": ["src/client/*"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "**/__tests__/*"]

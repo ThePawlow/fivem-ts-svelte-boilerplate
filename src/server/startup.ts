@@ -7,8 +7,6 @@ import {Events} from "@nativewrappers/server";
 const logger = container.get<LogService>(LogService);
 const playerController = container.get<PlayerController>(PlayerController);
 
-logger.log("Server is starting...");
-
 Events.on("playerConnecting", (name: string) => {
     logger.log(`Player connected with name ${name}`);
 })
@@ -16,3 +14,5 @@ Events.on("playerConnecting", (name: string) => {
 Events.on("playerDisconnected", (name: string) => {
     logger.log(`Player disconnected with name ${name}`);
 })
+
+logger.log("Server is starting...");
