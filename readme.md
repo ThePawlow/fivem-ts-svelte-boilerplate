@@ -17,6 +17,7 @@ docker compose up
 
 **Shared** under *src/shared**<br>
 *make sure you only import content that is available on both sides. One hint is the **API set: shared** visible at the top right of https://docs.fivem.net/natives.
+
 ![shared api set](https://i.imgur.com/Br6lLer.png)
 
 **NUI** under *src-nui*
