@@ -1,4 +1,4 @@
-# FiveM - TypeScript Meets DependencyInjection and Svelte
+# FiveM - TypeScript meets Modularity with Svelte in a dockerized FxServer
 # ✨ Features
 - Bundling into server/ client with a shared folder.
 - Dependency Injection with Inversify
