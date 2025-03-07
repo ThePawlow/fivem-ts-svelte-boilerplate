@@ -1,8 +1,13 @@
-# FiveM - TypeScript meets Modularity with Svelte in a dockerized FxServer
+# FiveM - TypeScript meets Modularity with Svelte5 in a dockerized FxServer
 # ✨ Features
-- Bundling into server/ client with a shared folder.
-- Dependency Injection with Inversify
-- Making use of nativewrappers https://github.com/nativewrappers/nativewrappers for a consistent object oriented approach.
+**Blazing-Fast Build Pipeline** - With Instant Change Detection! ⚡ <br>
+**Svelte 5** - For Next-Level Performance 🚀 <br>
+**Seamless Database** - Using Prisma ✨ <br>
+**Plug & Play Simplicity** – Fully Dockerized! 🐳 <br>
+**Optimized Architecture** – Bundled Server & Client with a Shared Core 📦 <br>
+**Powerful & Scalable** – Clean Dependency Injection via Inversify 🏗️ <br>
+**Consistent & OOP-Driven** – Leveraging [NativeWrappers](https://github.com/nativewrappers/nativewrappers) for Seamless Integration 🔥 <br>
+
 ## 🎯 Getting Started
 ```
 pnpm run build
