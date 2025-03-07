@@ -25,3 +25,5 @@ dist-ssr
 
 .env
 .env.test
+compose.yaml
+server.cfg
