@@ -6,7 +6,9 @@
 ## 🎯 Getting Started
 Linux might require sudo access
 ```
-yarn run watch
+pnpm run build
+# Incase you wish to be dockerized 🐋
+docker compose up
 ```
 ## 💡 Understanding
 ### Structure
