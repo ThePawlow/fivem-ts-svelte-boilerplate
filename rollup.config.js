@@ -22,16 +22,15 @@ const banner = `
   process.env["PRISMA_QUERY_ENGINE_BINARY"] = join(cwd(), "resources", "lib", "prisma-orm", "prisma", "generated", "query-engine-windows.exe");
 `;
 
-// ✅ Separate Copy Step (Independent Build)
 const copyStep = {
     input: "noop.js", // Fake input (Rollup requires one)
     plugins: [
         copy({
             targets: [
-                { src: "assets/**/*", dest: "dist" } // ✅ Copy assets separately
+                { src: "assets/**/*", dest: "dist" }
             ],
             verbose: true,
-            hook: "buildStart", // ✅ Copy before building client/server
+            hook: "buildStart",
         }),
     ],
 };
