@@ -24,10 +24,10 @@
     "build": "pnpm run build:core && pnpm run build:nui",
     "build:core": "rollup -c",
     "watch:core": "rollup -c -w",
-    "build:nui": "npx vite build ./src-nui",
-    "build:prisma": "npx prisma generate",
+    "build:nui": "pnpm vite build ./src-nui",
+    "build:prisma": "pnpm prisma generate",
     "[-] Utility": "",
-    "dev:nui": "npx vite ./src-nui"
+    "dev:nui": "pnpm vite ./src-nui"
   },
   "devDependencies": {
     "@citizenfx/client": "^2.0.12933-1",
