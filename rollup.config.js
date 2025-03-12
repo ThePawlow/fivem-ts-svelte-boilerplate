@@ -38,7 +38,7 @@ const copyStep = {
 const clientBuild = {
     input: "./src/client/startup.ts",
     output: {
-        file: "./dist/client.js",
+        file: "./dist/client/main.js",
         format: "esm",
         sourcemap: true,
         banner,
@@ -61,7 +61,7 @@ const clientBuild = {
 const serverBuild = {
     input: "./src/server/startup.ts",
     output: {
-        file: "./dist/server.js",
+        file: "./dist/server/main.js",
         format: "cjs",
         sourcemap: true,
     },
