@@ -1,6 +1,7 @@
 # sudo docker build -t fivem-node-alpine .
 
-FROM node:current-alpine AS builder
+#FROM node:current-alpine AS builder
+FROM alpine AS Artifacts
 RUN apk --no-cache add curl tar jq dtrx
 
 WORKDIR /opt/fivem
