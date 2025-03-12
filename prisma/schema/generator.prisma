@@ -2,6 +2,7 @@ generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["prismaSchemaFolder"]
   engineType      = "binary"
+  output   = "../../dist/server/prisma"
 }
 
 datasource db {
