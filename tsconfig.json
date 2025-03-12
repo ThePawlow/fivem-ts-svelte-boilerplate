@@ -18,7 +18,6 @@
     "target": "ES2022",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "emitDeclarationOnly": true,
     "baseUrl": "src",
     "paths": {
       "@shared/*": ["src/shared/*"],
