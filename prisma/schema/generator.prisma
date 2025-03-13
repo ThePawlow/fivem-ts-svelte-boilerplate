@@ -1,8 +1,14 @@
-generator client {
+generator client-local {
   provider        = "prisma-client-js"
   previewFeatures = ["prismaSchemaFolder"]
   engineType      = "binary"
   output          = "../../dist/server/prisma"
+}
+
+generator client-docker {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
+  engineType      = "binary"
 }
 
 datasource db {

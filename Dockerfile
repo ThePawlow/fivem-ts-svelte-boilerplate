@@ -11,13 +11,13 @@ FROM node:current-alpine AS build
 COPY . /opt/fivem/core
 WORKDIR /opt/fivem/core
 RUN apk add pnpm && pnpm install
-RUN pnpm prisma generate && pnpm run build
-RUN sed -i "s|require('@prisma/client')|require('/opt/fivem/server-data/resources/fivem-ts/server/prisma')|" /opt/fivem/core/dist/server/main.js
+RUN pnpm run build
+RUN find dist/server/prisma ! -name "schema.prisma" -type f -delete
 
 FROM node:current-alpine AS server
 LABEL maintainer="ThePawlow <business.shine939@passinbox.com>"
-RUN apk add clang
-RUN npm install -g npm prisma
+RUN apk add clang pnpm
+RUN npm install -g npm
 
 WORKDIR /opt/fivem/
 COPY --from=artifacts /opt/fivem/fx/alpine server
@@ -26,9 +26,11 @@ COPY server.cfg server-data
 COPY entrypoint.sh server-data
 
 WORKDIR /opt/fivem/server-data
+RUN pnpm init && pnpm install prisma @prisma/client
 
 RUN adduser -D -h /opt/fivem -s /sbin/nologin fivemuser && \
     chown -R fivemuser:fivemuser /opt/fivem
+
 RUN chmod +x /opt/fivem/server-data/entrypoint.sh
 USER fivemuser
 
