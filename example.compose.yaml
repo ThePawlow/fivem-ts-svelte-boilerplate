@@ -1,30 +1,51 @@
 services:
   server:
     depends_on:
-      - db
-    image: spritsail/fivem
-    container_name: fivem
+      db:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cfx
+    hostname: cfx
     restart: always
     stdin_open: true
     tty: true
-    volumes:
-      - "./server.cfg:/config/server.cfg"
-      - "./dist:/config/resources/fivem-ts"
-      # Enable a volume mount for txAdmin's data files
-      # - "/path/to/txData/folder:/txData"
     ports:
       - "30120:30120"
       - "30120:30120/udp"
       # Allow txAdmin's webserver port to be accessible
       # - "40120:40120"
-    environment:
-      LICENSE_KEY: "<LICENSE>"
+    env_file:
+      - .env
+    networks:
+      - fivem-network
   db:
+    container_name: db
+    hostname: db
     image: postgres:16.8-alpine3.20
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U access_user -d fivem"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
     # set shared memory limit when using docker-compose
     shm_size: 128mb
     environment:
       POSTGRES_DB: fivem
       POSTGRES_USER: access_user
       POSTGRES_PASSWORD: example
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fivem-network
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+networks:
+  fivem-network:
+    name: fivem-network
+volumes:
+  postgres_data:

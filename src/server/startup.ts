@@ -23,7 +23,10 @@ async function checkConnection() {
       await PRISMA.$connect();
       logger.log('Prisma client is connected');
     } catch (error) {
-      logger.log(`Error connecting to Prisma - Error: ${error}`);
+        logger.log(`Error connecting to Prisma - Error: ${error}`);
+        if (error.toString().includes('PrismaClientInitializationError')) {
+            logger.log("Fatal error. No Database Connection");
+        }
     } finally {
       await PRISMA.$disconnect(); // Don't forget to disconnect when done
     }
