@@ -1,5 +1,5 @@
 FROM alpine AS artifacts
-RUN apk --no-cache add curl tar jq dtrx
+RUN apk add curl tar jq dtrx
 
 WORKDIR /opt/fivem
 
@@ -10,17 +10,18 @@ RUN rm -rf ./fx/alpine/dev ./fx/alpine/proc ./fx/alpine/run ./fx/alpine/sys
 FROM node:current-alpine AS build
 COPY . /opt/fivem/core
 WORKDIR /opt/fivem/core
-RUN apk --no-cache add pnpm && pnpm install
+RUN apk add pnpm && pnpm install
 RUN pnpm prisma generate && pnpm run build
+RUN sed -i "s|require('@prisma/client')|require('/opt/fivem/server-data/resources/fivem-ts/server/prisma')|" /opt/fivem/core/dist/server/main.js
 
-FROM alpine AS server
+FROM node:current-alpine AS server
 LABEL maintainer="ThePawlow <business.shine939@passinbox.com>"
-RUN apk --no-cache add clang
+RUN apk add clang
+RUN npm install -g npm prisma
 
 WORKDIR /opt/fivem/
 COPY --from=artifacts /opt/fivem/fx/alpine server
 COPY --from=build /opt/fivem/core/dist server-data/resources/fivem-ts
-COPY --from=build /opt/fivem/core server-data/resources/fivem-ts-src
 COPY server.cfg server-data
 COPY entrypoint.sh server-data
 
