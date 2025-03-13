@@ -11,11 +11,11 @@
 ## 🎯 Getting Started
 ```
 pnpm install
-pnpm prisma generate # Generating Database Client
+pnpm run build:prisma # Generating Database Client
 pnpm run build # Building code base
 # If you want your FXServer to be dockerized 🐋
-docker build -t fivem-node-alpine .
 docker compose up
+docker compose up --build #If you made changes to your code, trigger a Dockerfile rebuild
 ```
 ## 💡 Understanding
 ### Structure
