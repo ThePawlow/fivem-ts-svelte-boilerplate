@@ -11,7 +11,6 @@
 ## 🎯 Getting Started
 ```
 pnpm install
-pnpm run build:prisma # Generating Database Client
 pnpm run build # Building code base
 # If you want your FXServer to be dockerized 🐋
 docker compose up

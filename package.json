@@ -21,7 +21,7 @@
   },
   "scripts": {
     "[-] Server Deployment Commands": "",
-    "build": "pnpm run build:core && pnpm run build:nui",
+    "build": "pnpm run build:prisma && pnpm run build:core && pnpm run build:nui",
     "build:core": "rollup -c",
     "watch:core": "rollup -c -w",
     "build:nui": "pnpm vite build ./src-nui",
