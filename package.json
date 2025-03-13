@@ -21,11 +21,11 @@
   },
   "scripts": {
     "[-] Server Deployment Commands": "",
-    "build": "pnpm run build:core && pnpm run build:nui",
+    "build": "pnpm run build:prisma && pnpm run build:core && pnpm run build:nui",
     "build:core": "rollup -c",
     "watch:core": "rollup -c -w",
     "build:nui": "pnpm vite build ./src-nui",
-    "build:prisma": "pnpm prisma generate",
+    "build:prisma": "pnpm prisma generate --generator client-local",
     "[-] Utility": "",
     "dev:nui": "pnpm vite ./src-nui"
   },
