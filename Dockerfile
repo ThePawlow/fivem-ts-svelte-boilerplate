@@ -19,8 +19,8 @@ RUN apk --no-cache add clang
 
 WORKDIR /opt/fivem/
 COPY --from=artifacts /opt/fivem/fx/alpine server
-COPY --from=build /opt/fivem/core/dist server-data/resources/core
-COPY --from=build /opt/fivem/core server-data/resources/core-src
+COPY --from=build /opt/fivem/core/dist server-data/resources/fivem-ts
+COPY --from=build /opt/fivem/core server-data/resources/fivem-ts-src
 COPY server.cfg server-data
 COPY entrypoint.sh server-data
 

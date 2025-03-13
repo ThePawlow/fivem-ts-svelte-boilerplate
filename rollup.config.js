@@ -4,23 +4,10 @@ import typescript from "@rollup/plugin-typescript";
 import replace from "@rollup/plugin-replace";
 import terser from "@rollup/plugin-terser";
 import dynamicImportVariables from "@rollup/plugin-dynamic-import-vars";
-import fs from "fs-extra";
 import path from "path";
-import { v4 as uuidv4 } from "uuid";
 import copy from "rollup-plugin-copy";
 
 const minifyFlag = false;
-const outputPath = "./dist";
-
-const banner = `
-  const { resolve, join } = require("path");
-  const { cwd } = require("process");
-
-  var __dirname = resolve();
-  var __filename = join(__dirname, "index.js");
-
-  process.env["PRISMA_QUERY_ENGINE_BINARY"] = join(cwd(), "resources", "lib", "prisma-orm", "prisma", "generated", "query-engine-windows.exe");
-`;
 
 const copyStep = {
     input: "noop.js", // Fake input (Rollup requires one)
@@ -38,10 +25,9 @@ const copyStep = {
 const clientBuild = {
     input: "./src/client/startup.ts",
     output: {
-        file: "./dist/client.js",
+        file: "./dist/client/main.js",
         format: "esm",
-        sourcemap: true,
-        banner,
+        sourcemap: true
     },
     plugins: [
         resolve(),
@@ -61,7 +47,7 @@ const clientBuild = {
 const serverBuild = {
     input: "./src/server/startup.ts",
     output: {
-        file: "./dist/server.js",
+        file: "./dist/server/main.js",
         format: "cjs",
         sourcemap: true,
     },
