@@ -1,7 +1,8 @@
 #!/bin/sh
 echo "Generating Migrations"
-npx prisma generate --generator client-local --schema /opt/fivem/server-data/resources/fivem-ts/server/prisma/schema.prisma
-npx prisma db push --schema /opt/fivem/server-data/resources/fivem-ts/server/prisma/schema.prisma
+schema=/opt/fivem/server-data/resources/fivem-ts/server/prisma/schema.prisma
+npx prisma generate --generator client-local --schema $schema
+npx prisma db push --schema $schema
 
 echo "Starting CFX"
 /opt/fivem/server/opt/cfx-server/ld-musl-x86_64.so.1 \
