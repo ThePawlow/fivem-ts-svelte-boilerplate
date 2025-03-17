@@ -10,4 +10,5 @@ echo "Starting CFX"
     -- \
     /opt/fivem/server/opt/cfx-server/FXServer \
         +set citizen_dir /opt/fivem/server/opt/cfx-server/citizen \
-        +exec server.cfg
+        +exec server.cfg \
+        $*
